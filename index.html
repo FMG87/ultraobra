@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0,viewport-fit=cover" />
+<title>Ultra</title>
+
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#4318ff" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<link rel="apple-touch-icon" href="Ultra.png" />
+
+<style>
+
+  /* ====================== 🔥 DEGRADÊ APLICADO AQUI 🔥 ===================== */
+  html,body{
+    margin:0;padding:0;height:100%;width:100%;
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    background: linear-gradient(135deg,#3000ff,#7429ff,#ff4fd8);
+    background-size:300% 300%;
+    animation:bgMove 12s ease infinite;
+  }
+  @keyframes bgMove{
+     0%{background-position:0% 50%;}
+     50%{background-position:100% 50%;}
+     100%{background-position:0% 50%;}
+  }
+  /* ======================================================================== */
+
+  .wrapper{
+    display:flex;align-items:center;justify-content:center;
+    height:100vh;width:100vw;padding:10px;gap:14px;box-sizing:border-box;
+  }
+  @supports(height:100dvh){.wrapper{height:100dvh;}}
+
+  .app-column{
+    flex:1;max-width:480px;height:100%;
+    background:#000;border-radius:20px;overflow:hidden;
+    display:flex;flex-direction:column;
+    box-shadow:0 0 22px rgba(0,0,0,.55);
+  }
+  iframe{flex:1;width:100%;border:none;}
+
+  /* QR codes desktop */
+  .qr-column{width:160px;display:flex;justify-content:center;align-items:center;}
+  .qr-box{
+    background:#fff;border-radius:16px;padding:14px;
+    box-shadow:0 0 14px rgba(0,0,0,.40);text-align:center;
+  }
+  .qr-title{font-size:15px;font-weight:700;margin-bottom:6px;display:flex;gap:6px;justify-content:center;align-items:center;}
+  .icon-pill{height:24;width:24;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:12px;color:#fff;}
+  .android{background:#3ddc84;color:#000;}
+  .apple{background:#000;}
+
+  .qr-box img{width:125px;height:125px;}
+  .qr-note{font-size:11px;color:#444;margin-top:6px;}
+
+  /* Mobile */
+  .mobile-note{display:none;background:#fff3;font-size:11px;text-align:center;color:#ffe;border-bottom:1px solid #ffffff33;}
+
+  @media(max-width:900px){
+    .qr-column{display:none;}
+    .wrapper{padding:0;}
+    .app-column{max-width:none;width:100vw;height:100vh;border-radius:0;box-shadow:none;}
+    @supports(height:100dvh){.app-column{height:100dvh;}}
+    .mobile-note{display:block;}
+  }
+</style>
+
+<script>
+ const ANDROID="https://play.google.com/store/apps/details?id=com.microsoft.msapps";
+ const IOS="https://apps.apple.com/br/app/power-apps/id1047318566";
+
+ window.onload=()=>{
+   document.getElementById("qrAndroid").src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+encodeURIComponent(ANDROID);
+   document.getElementById("qrIOS").src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+encodeURIComponent(IOS);
+ }
+
+ if("serviceWorker" in navigator){ navigator.serviceWorker.register("sw.js"); }
+</script>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <div class="qr-column">
+    <div class="qr-box">
+      <div class="qr-title"><span class="icon-pill android">🤖</span> Android</div>
+      <img id="qrAndroid"><div class="qr-note">Baixar Microsoft Power Apps</div>
+    </div>
+  </div>
+
+  <div class="app-column">
+    <div class="mobile-note">Para melhor experiência instale o Power Apps.</div>
+
+    <iframe src="https://apps.powerapps.com/play/e/default-25285881-44cf-4c96-af0c-36d28792f507/a/785c49b3-41ef-4718-9c86-2f5860603a66?tenantId=25285881-44cf-4c96-af0c-36d28792f507&hint=abcd043f-4021-4bd0-9c17-d9507d2a5a78&sourcetime=1765303901918&source=portal&chrome=0&fullscreen=1&hideNavBar=true
+"></iframe>
+  </div>
+
+  <div class="qr-column">
+    <div class="qr-box">
+      <div class="qr-title"><span class="icon-pill apple"></span> Apple</div>
+      <img id="qrIOS"><div class="qr-note">Baixar Microsoft Power Apps</div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
